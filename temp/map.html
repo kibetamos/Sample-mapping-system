@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Google Map</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-stand-blog.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Map</h1>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+
+            // Map options
+
+            var options = {
+                zoom: 8,
+                center: {
+                    lat: -1.286389,
+                    lng: 36.817223
+                }
+
+            }
+
+            // New Map
+
+            var map = new
+            google.maps.Map(document.getElementById('map'), options);
+
+            // Listen for click on map
+            google.maps.event.addListener(map, 'click',
+                function(event) {
+                    //add marker
+                    addMarker({
+                        coords: event.latLng
+                    });
+                });
+
+
+            /*
+        // Add Marker
+        var marker = new google.maps.Marker({
+            position: { lat: 35.7796, lng: -78.6382 },
+            map: map,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/coffeehouse.png'
+        });
+        var infoWindow = new google.maps.InfoWindow({
+        	content: '<h1>Raleigh NC</h1>'
+        });
+        marker.addListener('click', function(){
+        	infoWindow.open(map, marker);
+        });
+		*/
+
+            // Array of markers
+
+            var markers = [{
+                coords: {
+                    lat: -6.776012,
+                    lng: 39.178326
+
+                },
+                iconImage: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                content: '<h1>Dar es Salaam</h1>'
+
+            }, {
+                coords: {
+                    lat: -1.286389,
+                    lng: 36.817223
+
+                },
+                content: '<h1>Nairobi</h1>'
+            }, ];
+
+            // Loop Through Markers
+
+            for (var i = 0; i < markers.length; i++) {
+                addMarker(markers[i]);
+
+            };
+
+
+            // Add marker Function
+            function addMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coords,
+                    map: map,
+                    //icon: props.iconImage
+
+                });
+
+
+                //check for custom icon
+                if (props.iconImage) {
+                    //set icon image
+                    marker.setIcon(props.iconImage);
+
+                }
+
+                // Check content
+
+                if (props.content) {
+                    //set content
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: props.content
+                    });
+
+                    marker.addListener('click', function() {
+                        infoWindow.open(map, marker);
+                    });
+                }
+            }
+
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRIHMEzDAGN7hUQ6y826NMf4ftX8lNkE0&callback=initMap">
+    </script>
+</body>
+
+</html>
+```
